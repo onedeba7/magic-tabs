@@ -95,9 +95,9 @@ afterEvaluate {
 
                 // Get credentials from environment variables for GitHub Actions
                 credentials {
-                    username = project.findProperty("GIT_ACTOR") ?: ""
-                    password = project.findProperty("GIT_TOKEN") ?: ""
-                }
+                    username = System.getenv("GPR_USER") ?: ""
+                    password = System.getenv("GPR_KEY") ?: ""
+				}
             }
 			
 			maven {
