@@ -55,11 +55,11 @@ afterEvaluate {
                 // Define your coordinates (what developers will use to import)
                 groupId = 'io.github.onedeba7' // e.g., 'com.example.library'
                 artifactId = 'button' // e.g., 'awesome-library'
-                version = '1.0.0' // This can be pulled from a property/version file
+                version = '1.0.0-SNAPSHOT' // This can be pulled from a property/version file
 				pom {
                     name = artifactId
                     description = 'A brief description of your library.'
-                    url = 'https://github.com/onedeba7/button'
+                    url = 'https://github.com/onedeba7/magic-tabs'
                     
                     licenses {
                         // Example: Apache 2.0
@@ -76,28 +76,28 @@ afterEvaluate {
                         }
                     }
                     scm {
-                        connection = 'scm:git:github.com/onedeba7/button.git'
-                        developerConnection = 'scm:git:github.com/onedeba7/button.git'
-                        url = 'https://github.com/onedeba7/button'
+                        connection = 'scm:git:github.com/onedeba7/magic-tabs.git'
+                        developerConnection = 'scm:git:github.com/onedeba7/magic-tabs.git'
+                        url = 'https://github.com/onedeba7/magic-tabs'
                     }
 				}
             }
         }
         repositories {
-			/*
+			
             maven {
                 // GitHub Packages URL structure: 
                 // https://maven.pkg.github.com/OWNER/REPOSITORY
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/onedeba7/button")
+                url = uri("https://maven.pkg.github.com/onedeba7/magic-tabs")
 
                 // Get credentials from environment variables for GitHub Actions
                 credentials {
-                    username = project.findProperty("GIT_ACTOR") ?: ""
-                    password = project.findProperty("GIT_TOKEN") ?: ""
+                    username = System.getenv("GPR_USER") ?: ""
+                    password = System.getenv("GPR_KEY") ?: ""
                 }
             }
-			*/
+			
 			maven {
             def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
             def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
