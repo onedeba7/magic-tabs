@@ -1,0 +1,116 @@
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+	id 'signing'
+}
+
+ //apply from: '../publishing.gradle'
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+//group = 'com.github.onedeba7'version = '1.0.0'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+    }
+	
+	buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+
+}
+
+dependencies {
+    // Your library dependencies
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+}
+
+// After your 'android {}' block
+afterEvaluate {
+    publishing {
+        publications {
+            // Name your publication (e.g., 'release')
+            release(MavenPublication) {
+                // Use the 'release' component from the Android plugin
+                from components.release
+
+                // Define your coordinates (what developers will use to import)
+                groupId = 'io.github.onedeba7' // e.g., 'com.example.library'
+                artifactId = 'button' // e.g., 'awesome-library'
+                version = '1.0.0' // This can be pulled from a property/version file
+				pom {
+                    name = artifactId
+                    description = 'A brief description of your library.'
+                    url = 'https://github.com/onedeba7/button'
+                    
+                    licenses {
+                        // Example: Apache 2.0
+                        license {
+                            name = 'The Apache Software License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'onedeba7'
+                            name = 'Debashis Sabar'
+                            email = 'onedeba7@gmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:github.com/onedeba7/button.git'
+                        developerConnection = 'scm:git:github.com/onedeba7/button.git'
+                        url = 'https://github.com/onedeba7/button'
+                    }
+				}
+            }
+        }
+        repositories {
+			/*
+            maven {
+                // GitHub Packages URL structure: 
+                // https://maven.pkg.github.com/OWNER/REPOSITORY
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/onedeba7/button")
+
+                // Get credentials from environment variables for GitHub Actions
+                credentials {
+                    username = project.findProperty("GIT_ACTOR") ?: ""
+                    password = project.findProperty("GIT_TOKEN") ?: ""
+                }
+            }
+			*/
+			maven {
+            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+        }
+    }
+
+
+    
+    signing {
+        sign publishing.publications.release
+    }
+}
+
+
