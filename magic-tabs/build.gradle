@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'maven-publish'
-	id 'signing'
+//	id 'signing'
 }
 
  //apply from: '../publishing.gradle'
@@ -109,10 +109,11 @@ afterEvaluate {
     }
 
 
-    
+    /*
     signing {
         sign publishing.publications.release
     }
+    */
 }
 
 
