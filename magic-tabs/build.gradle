@@ -91,7 +91,7 @@ afterEvaluate {
                 // GitHub Packages URL structure: 
                 // https://maven.pkg.github.com/OWNER/REPOSITORY
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/onedeba7/magicIndicator")
+                url = uri("https://maven.pkg.github.com/onedeba7/magic-tabs")
 
                 // Get credentials from environment variables for GitHub Actions
                 credentials {
